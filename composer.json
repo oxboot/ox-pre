@@ -1,0 +1,25 @@
+{
+  "name": "oxboot/ox",
+  "description": "Ox - Command-line server control panel & deployment tool written in PHP",
+  "license": "MIT",
+  "authors": [
+    {
+        "name": "Zorca",
+        "email": "vs@zorca.org"
+    }
+  ],
+  "require": {
+    "pimple/pimple": "^3.2",
+    "symfony/console": "^3.3",
+    "symfony/process": "^3.3",
+    "symfony/filesystem": "^3.3",
+    "symfony/yaml": "^3.3",
+    "mustache/mustache": "^2.12",
+    "hassankhan/config": "^0.10.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ox\\": "src/"
+    }
+  }
+}
