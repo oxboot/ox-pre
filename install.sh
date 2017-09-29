@@ -35,14 +35,8 @@ function ox_install()
   ox_lib_echo "Install PHP 7.1, please wait..."
   add-apt-repository -y 'ppa:ondrej/php'
   apt-get update &>> /dev/null
-  apt-get -y install php7.1-fpm php7.1-curl php7.1-gd php7.1-imap php7.1-mcrypt php7.1-readline php7.1-common php7.1-recode php7.1-mysql php7.1-cli php7.1-curl php7.1-mbstring php7.1-bcmath php7.1-mysql php7.1-opcache php7.1-zip php7.1-xml php-memcached php-imagick php-memcache memcached graphviz php-pear php-xdebug php-msgpack php7.1-soap || ox_lib_echo_fail "Unable to install PHP-CLI 7.1, exit status " 1
+  apt-get -y install php7.1-fpm php7.1-curl php7.1-gd php7.1-imap php7.1-mcrypt php7.1-readline php7.1-common php7.1-recode php7.1-mysql php7.1-cli php7.1-curl php7.1-mbstring php7.1-bcmath php7.1-mysql php7.1-opcache php7.1-zip php7.1-xml php-memcached php-imagick php-memcache memcached graphviz php-pear php-xdebug php-msgpack php7.1-soap || ox_lib_echo_fail "Unable to install PHP 7.1, exit status " 1
   service php7.1-fpm restart &>> /dev/null
-
-  ox_lib_echo "Install NGINX, please wait..."
-  apt-add-repository 'ppa:nginx/stable' -y
-  apt-get update &>> /dev/null
-  apt-get -y install nginx || ox_lib_error "Unable to install NGINX, exit status " 1
-  service nginx restart &>> /dev/null
 
   ox_lib_echo "Install OX, please wait..."
   wget -q ox.oxboot.com/ox.phar
