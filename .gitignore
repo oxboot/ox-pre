@@ -1,0 +1,4 @@
+.vagrant/
+/vendor/
+*.phar
+*.log
