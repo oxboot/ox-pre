@@ -12,9 +12,7 @@ use Ox\Command\SiteCreateCommand;
 
 class Console extends ConsoleApplication
 {
-    /**
-     * @var Ox
-     */
+    /** @var Ox */
     private $ox;
 
     public function getApp()

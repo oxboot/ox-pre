@@ -1,0 +1,5 @@
+modules:
+    - php
+    - nginx
+commands:
+    - echo '<?php phpinfo();' > {{site_webdir}}/info.php
