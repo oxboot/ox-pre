@@ -27,5 +27,11 @@ class SiteCreateCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $site_name = $input->getArgument('site_name');
+        $package = $input->getOption('package');
+
+        $stack = $this->ox['stack'];
+        $stack_check = $stack->check($package);
+        var_dump($stack_check);
     }
 }

@@ -9,6 +9,8 @@ namespace Ox;
 
 use Pimple\Container;
 use Symfony\Component\Filesystem\Filesystem;
+use Ox\Stack\Stack;
+use Symfony\Component\Yaml\Yaml;
 
 class Ox extends Container
 {
@@ -17,12 +19,20 @@ class Ox extends Container
         parent::__construct();
         $ox = $this;
 
-        $ox['console'] = function ($c) use ($ox) {
-            return new Console($ox, OX_NAME, OX_VERSION);
+        $ox['console'] = function ($c) {
+            return new Console($c, OX_NAME, OX_VERSION);
         };
 
         $ox['fs'] = function ($c) {
             return new Filesystem();
+        };
+
+        $ox['yaml'] = function ($c) {
+            return new Yaml();
+        };
+
+        $ox['stack'] = function ($c) {
+            return new Stack($c);
         };
     }
 }
