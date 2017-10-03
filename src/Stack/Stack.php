@@ -7,11 +7,8 @@
 
 namespace Ox\Stack;
 
-use Symfony\Component\Yaml\Exception\ParseException;
-
 class Stack
 {
-    private const OX_PACKAGES_FOLDER = OX_ROOT . '/packages';
     private const OX_STACK_FILE_PATH = OX_DB_FOLDER . DS . 'stack.yml';
 
     /** @var \Ox\Ox */
@@ -23,6 +20,9 @@ class Stack
     /** @var \Symfony\Component\Yaml\Yaml */
     private $yaml;
 
+    /**
+     * @var mixed
+     */
     private $all;
 
     public function __construct($ox)
@@ -33,8 +33,8 @@ class Stack
 
         $all = [];
 
-        if (!$this->fs->exists($this::OX_STACK_FILE_PATH)) {
-            $this->fs->dumpFile($this::OX_STACK_FILE_PATH, '');
+        if (!$this->fs->exists(self::OX_STACK_FILE_PATH)) {
+            $this->fs->dumpFile(self::OX_STACK_FILE_PATH, '');
         }
         try {
             $all = $this->yaml::parse(file_get_contents($this::OX_STACK_FILE_PATH));
@@ -47,5 +47,10 @@ class Stack
     public function getAll()
     {
         return $this->all;
+    }
+
+    public function check($element)
+    {
+        return in_array($element, $this->all);
     }
 }
