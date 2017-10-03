@@ -9,6 +9,7 @@ namespace Ox;
 
 use Symfony\Component\Console\Application as ConsoleApplication;
 use Ox\Command\SiteCreateCommand;
+use Ox\Command\StackListCommand;
 
 class Console extends ConsoleApplication
 {
@@ -26,7 +27,8 @@ class Console extends ConsoleApplication
         parent::__construct($name, $version);
 
         $this->addCommands([
-            new SiteCreateCommand()
+            new SiteCreateCommand(),
+            new StackListCommand()
         ]);
     }
 }

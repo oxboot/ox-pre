@@ -7,39 +7,45 @@
 
 namespace Ox\Stack;
 
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 class Stack
 {
-    const OX_PACKAGES_FOLDER = OX_ROOT . '/packages';
+    private const OX_PACKAGES_FOLDER = OX_ROOT . '/packages';
+    private const OX_STACK_FILE_PATH = OX_DB_FOLDER . DS . 'stack.yml';
 
     /** @var \Ox\Ox */
     private $ox;
 
     /** @var \Symfony\Component\Filesystem\Filesystem */
-    protected $fs;
+    private $fs;
 
     /** @var \Symfony\Component\Yaml\Yaml */
-    protected $yaml;
+    private $yaml;
+
+    private $all;
 
     public function __construct($ox)
     {
         $this->ox = $ox;
         $this->fs = $ox['fs'];
         $this->yaml = $ox['yaml'];
+
+        $all = [];
+
+        if (!$this->fs->exists($this::OX_STACK_FILE_PATH)) {
+            $this->fs->dumpFile($this::OX_STACK_FILE_PATH, '');
+        }
+        try {
+            $all = $this->yaml::parse(file_get_contents($this::OX_STACK_FILE_PATH));
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
+        $this->all = $all;
     }
 
-    public function check($package)
+    public function getAll()
     {
-        $package_file_path = $this::OX_PACKAGES_FOLDER . DS . $package . '.yml';
-        if (!$this->fs->exists($package_file_path)) {
-            return ['result' => false, 'message' => 'Package ' . $package . ' not exists'];
-        }
-        $package_modules = $this->yaml::parse(file_get_contents($package_file_path))['modules'];
-        if (!isset($package_modules)) {
-            return ['result' => true, 'message' => 'Package ' . $package . ' does not depend on the stack modules'];
-        }
-        return ['result' => true, 'message' => 'Package stack modules ' . $package . ' already installed'];
+        return $this->all;
     }
 }

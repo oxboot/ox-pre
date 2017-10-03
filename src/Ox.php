@@ -9,8 +9,8 @@ namespace Ox;
 
 use Pimple\Container;
 use Symfony\Component\Filesystem\Filesystem;
-use Ox\Stack\Stack;
 use Symfony\Component\Yaml\Yaml;
+use Ox\Stack\Stack;
 
 class Ox extends Container
 {

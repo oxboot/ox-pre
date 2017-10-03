@@ -32,6 +32,5 @@ class SiteCreateCommand extends BaseCommand
 
         $stack = $this->ox['stack'];
         $stack_check = $stack->check($package);
-        var_dump($stack_check);
     }
 }
