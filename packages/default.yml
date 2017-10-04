@@ -1,5 +1,7 @@
 modules:
     - php
     - nginx
+    - composer
+    - mysql
 commands:
-    - echo '<?php phpinfo();' > {{site_webdir}}/info.php
+    - echo '<?php phpinfo();' > {{site_webdir}}/phpinfo.php

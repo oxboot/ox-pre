@@ -7,6 +7,9 @@
 
 namespace Ox\Stack;
 
+use Ox\Stack\Module\NGINX;
+use Ox\Stack\Module\PHP;
+
 class Stack
 {
     private const OX_STACK_FILE_PATH = OX_DB_FOLDER . DS . 'stack.yml';
@@ -31,8 +34,6 @@ class Stack
         $this->fs = $ox['fs'];
         $this->yaml = $ox['yaml'];
 
-        $all = [];
-
         if (!$this->fs->exists(self::OX_STACK_FILE_PATH)) {
             $this->fs->dumpFile(self::OX_STACK_FILE_PATH, '');
         }
@@ -49,8 +50,26 @@ class Stack
         return $this->all;
     }
 
-    public function check($element)
+    public function check($module)
     {
-        return in_array($element, $this->all);
+        return in_array($module, $this->all);
+    }
+
+    public function install($module)
+    {
+        if ($this->check($module)) {
+            return false;
+        }
+        switch ($module) {
+            case 'php':
+                new PHP();
+                break;
+            case 'nginx':
+                new NGINX();
+                break;
+            default :
+                return false;
+        }
+        return true;
     }
 }

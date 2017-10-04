@@ -11,6 +11,7 @@ use Pimple\Container;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 use Ox\Stack\Stack;
+use Ox\Package\Package;
 
 class Ox extends Container
 {
@@ -33,6 +34,10 @@ class Ox extends Container
 
         $ox['stack'] = function ($c) {
             return new Stack($c);
+        };
+
+        $ox['package'] = function ($c) {
+            return new Package($c);
         };
     }
 }

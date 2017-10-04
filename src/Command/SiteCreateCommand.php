@@ -28,9 +28,27 @@ class SiteCreateCommand extends BaseCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $site_name = $input->getArgument('site_name');
-        $package = $input->getOption('package');
+        $package_name = $input->getOption('package');
 
+        /**
+         * @var \Ox\Stack\Stack $stack
+         */
         $stack = $this->ox['stack'];
-        $stack_check = $stack->check($package);
+        $package = $this->ox['package']->load($package_name);
+        if (isset($package['modules'])) {
+            foreach ($package['modules'] as $package_module) {
+                if ($stack->check($package_module)) {
+                    $this->echo->success($package_module . ' installed');
+                } else {
+                    $this->echo->error($package_module . ' not installed');
+                }
+            }
+        }
+        $modules_to_install = array_diff($package['modules'], $stack->getAll());
+        if (!empty($modules_to_install)) {
+            foreach ($modules_to_install as $module) {
+                $stack->install($module);
+            }
+        }
     }
 }

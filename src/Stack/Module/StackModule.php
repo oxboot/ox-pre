@@ -5,11 +5,10 @@
  * @license     MIT License; see LICENSE file for details.
  */
 
-namespace Ox\Stack;
+namespace Ox\Stack\Module;
 
-use PHPUnit\Framework\TestCase;
-
-class StackTest
+abstract class StackModule
 {
-
+    abstract public function install();
+    abstract public function uninstall();
 }
