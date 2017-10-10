@@ -7,8 +7,20 @@
 
 namespace Ox\Stack\Module;
 
+use Ox\Helper\EchoHelper;
+use Ox\Helper\ExecHelper;
+
 abstract class StackModule
 {
-    abstract public function install();
-    abstract public function uninstall();
+    protected $echo;
+    protected $exec;
+
+    public function __construct()
+    {
+        $this->echo = new EchoHelper();
+        $this->exec = new ExecHelper();
+    }
+
+    abstract public function install():bool;
+    abstract public function uninstall():bool;
 }

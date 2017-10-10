@@ -55,21 +55,34 @@ class Stack
         return in_array($module, $this->all);
     }
 
+    private function moduleInstance($module)
+    {
+        switch ($module) {
+            case 'php':
+                $module_instance = new PHP();
+                break;
+            case 'nginx':
+                $module_instance = new NGINX();
+                break;
+            default :
+                return false;
+        }
+        return $module_instance;
+    }
+
     public function install($module)
     {
         if ($this->check($module)) {
             return false;
         }
-        switch ($module) {
-            case 'php':
-                new PHP();
-                break;
-            case 'nginx':
-                new NGINX();
-                break;
-            default :
-                return false;
+        return $this->moduleInstance($module)->install();
+    }
+
+    public function uninstall($module)
+    {
+        if ($this->check($module)) {
+            return false;
         }
-        return true;
+        return $this->moduleInstance($module)->uninstall();
     }
 }

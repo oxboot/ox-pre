@@ -7,15 +7,39 @@
 
 namespace Ox\Stack\Module;
 
-class NGINX
+use Ox\Helper\ExecHelper;
+
+class NGINX extends StackModule
 {
-    public function install()
+    public function install():bool
     {
-        // TODO: Implement install() method.
+        $this->echo->info("Install NGINX, please wait...");
+        $commands = [
+            "apt-add-repository \"ppa:nginx/stable\" -y",
+            "apt-get update &>> /dev/null",
+            "apt-get -y install nginx",
+            "service nginx restart &>> /dev/null"
+        ];
+        foreach ($commands as $command) {
+            if (!$this->exec->process($command)) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    public function uninstall()
+    public function uninstall():bool
     {
-        // TODO: Implement uninstall() method.
+        $this->echo->info("Uninstall NGINX, please wait...");
+        $commands = [
+            "apt-get -y purge nginx",
+            "apt-get -y --purge autoremove"
+        ];
+        foreach ($commands as $command) {
+            if (!$this->exec->process($command)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

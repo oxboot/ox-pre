@@ -9,13 +9,12 @@ namespace Ox\Stack\Module;
 
 class PHP extends StackModule
 {
-    public function install()
+    public function install():bool
     {
-
         // TODO: Implement install() method.
     }
 
-    public function uninstall()
+    public function uninstall():bool
     {
         // TODO: Implement uninstall() method.
     }
