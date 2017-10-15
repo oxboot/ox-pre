@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     ox
- * @copyright   Copyright (C) 2017 Zorcastudio. All rights reserved.
+ * @copyright   Copyright (C) 2017 Zorca. All rights reserved.
  * @license     MIT License; see LICENSE file for details.
  */
 
@@ -33,7 +33,7 @@ class EchoHelper
     /**
      * Writes an info message
      *
-     * @param      string  $message  The message
+     * @param string  $message  The message
      */
     public function info(string $message)
     {
@@ -43,7 +43,7 @@ class EchoHelper
     /**
      * Writes a success message
      *
-     * @param      string  $message  The message
+     * @param string  $message  The message
      */
     public function success(string $message)
     {
@@ -53,7 +53,7 @@ class EchoHelper
     /**
      * Writes an error message
      *
-     * @param      string  $message  The message
+     * @param string  $message  The message
      */
     public function error(string $message)
     {
@@ -63,8 +63,8 @@ class EchoHelper
     /**
      * Writes a line to the output
      *
-     * @param      string  $message
-     * @param      string  $color
+     * @param string  $message
+     * @param string  $color
      */
     protected function write(string $message, string $color = 'white')
     {

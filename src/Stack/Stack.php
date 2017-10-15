@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     ox
- * @copyright   Copyright (C) 2017 Zorcastudio. All rights reserved.
+ * @copyright   Copyright (C) 2017 Zorca. All rights reserved.
  * @license     MIT License; see LICENSE file for details.
  */
 
@@ -73,6 +73,10 @@ class Stack
     public function install($module)
     {
         if ($this->check($module)) {
+            return false;
+        }
+        $module_instance = $this->moduleInstance($module);
+        if (!$module_instance) {
             return false;
         }
         return $this->moduleInstance($module)->install();
