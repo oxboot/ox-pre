@@ -7,6 +7,7 @@
 
 namespace Ox\Command;
 
+use Ox\Database\Site;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
@@ -44,11 +45,13 @@ class SiteCreateCommand extends BaseCommand
                 }
             }
         }
-        $modules_to_install = array_diff($package['modules'], $stack->getAll());
+        $modules_to_install = array_diff($package['modules'], $stack->getInstalled());
         if (!empty($modules_to_install)) {
             foreach ($modules_to_install as $module) {
                 $stack->install($module);
             }
         }
+        $site_db = new Site();
+        $site_db->add($site_name, ['test' => 'new_test']);
     }
 }

@@ -32,8 +32,8 @@ class Ox extends Container
             return new Yaml();
         };
 
-        $ox['stack'] = function ($c) {
-            return new Stack($c);
+        $ox['stack'] = function () {
+            return new Stack();
         };
 
         $ox['package'] = function ($c) {

@@ -7,52 +7,31 @@
 
 namespace Ox\Stack;
 
+use Ox\Database\Database;
 use Ox\Stack\Module\NGINX;
 use Ox\Stack\Module\PHP;
 
 class Stack
 {
-    private const OX_STACK_FILE_PATH = OX_DB_FOLDER . DS . 'stack.yml';
-
-    /** @var \Ox\Ox */
-    private $ox;
-
-    /** @var \Symfony\Component\Filesystem\Filesystem */
-    private $fs;
-
-    /** @var \Symfony\Component\Yaml\Yaml */
-    private $yaml;
-
     /**
-     * @var mixed
+     * @var Database
      */
-    private $all;
+    private $db;
 
-    public function __construct($ox)
+    public function __construct()
     {
-        $this->ox = $ox;
-        $this->fs = $ox['fs'];
-        $this->yaml = $ox['yaml'];
-
-        if (!$this->fs->exists(self::OX_STACK_FILE_PATH)) {
-            $this->fs->dumpFile(self::OX_STACK_FILE_PATH, '');
-        }
-        try {
-            $all = $this->yaml::parse(file_get_contents($this::OX_STACK_FILE_PATH));
-        } catch (\Exception $exception) {
-            throw $exception;
-        }
-        $this->all = $all;
+        $this->db = new Database('config');
+        $this->db->add(['installed' => ['php', 'mysql']], 'stack');
     }
 
-    public function getAll()
+    public function getInstalled()
     {
-        return $this->all;
+        return $this->db->get('stack')->installed;
     }
 
     public function check($module)
     {
-        return in_array($module, $this->all);
+        return in_array($module, $this->getInstalled());
     }
 
     private function moduleInstance($module)
@@ -64,7 +43,7 @@ class Stack
             case 'nginx':
                 $module_instance = new NGINX();
                 break;
-            default :
+            default:
                 return false;
         }
         return $module_instance;

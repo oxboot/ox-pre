@@ -40,8 +40,8 @@ class Package
         }
         try {
             $package = $this->yaml::parse(file_get_contents($package_file));
-        } catch (\Exception $exception) {
-            throw $exception;
+        } catch (\Throwable $throwable) {
+            throw $throwable;
         }
         $this->package = $package;
         return $package;
